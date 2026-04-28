@@ -1,0 +1,20 @@
+data:
+  dataset: "CIFAR-10"
+  num_classes: 10
+  num_workers: 4
+
+training:
+  epochs: 30
+  batch_size: 128
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  seed: 42
+
+model:
+  name: "SimpleCNN"
+  dropout: 0.5
+
+logging:
+  log_dir: "logs/"
+  checkpoint_dir: "checkpoints/"
+  save_every: 5  # save checkpoint every N epochs
