@@ -2,6 +2,8 @@
 main.py — Entry point: loads config, builds model, trains and evaluates.
 """
 
+import os
+
 import yaml
 import torch
 
@@ -21,10 +23,12 @@ def main() -> None:
     logger = get_logger(__name__)
     set_seed(config["training"]["seed"])
     device = get_device()
+    results_dir = config["evaluation"]["results_dir"]
+    os.makedirs(results_dir, exist_ok=True)
 
     logger.info("Loading dataset...")
     train_loader, val_loader = get_dataloaders(
-        data_dir="data/",
+        data_dir=config["data"]["data_dir"],
         batch_size=config["training"]["batch_size"],
         num_workers=config["data"]["num_workers"],
     )
@@ -42,7 +46,7 @@ def main() -> None:
     train(model, train_loader, val_loader, config, device)
 
     logger.info("Evaluating model...")
-    evaluate(model, val_loader, device, save_path="confusion_matrix.png")
+    evaluate(model, val_loader, device, save_path=os.path.join(results_dir, "confusion_matrix.png"))
 
     logger.info("Done.")
 

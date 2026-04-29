@@ -7,6 +7,8 @@ Trains a custom CNN on the CIFAR-10 dataset from scratch, achieving ~83% accurac
 
 ## Results
 
+![Confusion Matrix](docs/images/confusion_matrix.png)
+
 | Metric | Value |
 |--------|-------|
 | Validation Accuracy | 83% |
@@ -22,6 +24,9 @@ cifar10-cnn-classifier/
 ├── data/                  # CIFAR-10 dataset (auto-downloaded, git-ignored)
 ├── checkpoints/           # Model checkpoints (git-ignored)
 ├── logs/                  # TensorBoard logs (git-ignored)
+├── results/               # Evaluation artifacts (git-ignored)
+├── docs/
+│   └── images/            # Figures showcased in this README
 ├── src/
 │   ├── dataset.py         # Data loading & transforms
 │   ├── model.py           # CNN architecture
