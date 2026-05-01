@@ -104,20 +104,35 @@ def train(
         device: Device to train on (CPU or CUDA).
     """
     criterion = nn.CrossEntropyLoss()
-    optimizer = torch.optim.Adam(
+    optimizer = torch.optim.AdamW(
         model.parameters(),
         lr=config["training"]["learning_rate"],
         weight_decay=config["training"]["weight_decay"],
     )
-    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
-        optimizer, T_max=config["training"]["epochs"]
+    
+    warmup_epochs = config["training"]["warmup_epochs"]
+    epochs = config["training"]["epochs"]
+    
+    scheduler = torch.optim.lr_scheduler.SequentialLR(
+        optimizer,
+        schedulers=[
+            torch.optim.lr_scheduler.LinearLR(
+                optimizer,
+                start_factor=0.1,
+                end_factor=1.0,
+                total_iters=warmup_epochs,
+            ),
+            torch.optim.lr_scheduler.CosineAnnealingLR(
+                optimizer,
+                T_max=epochs - warmup_epochs,
+            ),
+        ],
+        milestones=[warmup_epochs],
     )
 
     writer = SummaryWriter(log_dir=config["logging"]["log_dir"])
     checkpoint_dir = config["logging"]["checkpoint_dir"]
     os.makedirs(checkpoint_dir, exist_ok=True)
-
-    epochs = config["training"]["epochs"]
 
     for epoch in range(1, epochs + 1):
         train_metrics = train_one_epoch(model, train_loader, criterion, optimizer, device)

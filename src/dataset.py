@@ -19,10 +19,20 @@ def get_transforms() -> Tuple[transforms.Compose, transforms.Compose]:
     train_transform = transforms.Compose([
         transforms.RandomHorizontalFlip(),
         transforms.RandomCrop(32, padding=4),
+        transforms.ColorJitter(
+            brightness=0.2,
+            contrast=0.2,
+            saturation=0.2,
+        ),
         transforms.ToTensor(),
         transforms.Normalize(
             mean=[0.4914, 0.4822, 0.4465],
             std=[0.2470, 0.2435, 0.2616],
+        ),
+        transforms.RandomErasing(
+            p=0.25,
+            scale=(0.02, 0.2),
+            ratio=(0.3, 3.3),
         ),
     ])
 
