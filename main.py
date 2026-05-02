@@ -8,7 +8,7 @@ import yaml
 import torch
 
 from src.dataset import get_dataloaders
-from src.model import SimpleCNN
+from src.model import SimpleCNN, ResNet18
 from src.train import train
 from src.evaluate import evaluate
 from src.utils import get_device, get_logger, set_seed
@@ -34,10 +34,21 @@ def main() -> None:
     )
 
     logger.info("Building model...")
-    model = SimpleCNN(
-        num_classes=config["data"]["num_classes"],
-        dropout=config["model"]["dropout"],
-    ).to(device)
+    model_name = config["model"]["name"]
+
+    if model_name == "SimpleCNN":
+        model = SimpleCNN(
+            num_classes=config["data"]["num_classes"],
+            dropout=config["model"]["dropout"],
+        )
+    elif model_name == "ResNet18":
+        model = ResNet18(
+            num_classes=config["data"]["num_classes"],
+        )
+    else:
+        raise ValueError(f"Unknown model: {model_name}")
+
+    model = model.to(device)
 
     logger.info(f"Model: {config['model']['name']} | Device: {device}")
     logger.info(f"Parameters: {sum(p.numel() for p in model.parameters()):,}")
