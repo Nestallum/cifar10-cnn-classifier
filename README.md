@@ -11,9 +11,9 @@ Trains a custom CNN on the CIFAR-10 dataset from scratch, achieving ~83% accurac
 
 | Metric | Value |
 |--------|-------|
-| Validation Accuracy | 83% |
-| Best class | Automobile (F1: 0.92) |
-| Hardest class | Cat (F1: 0.68) |
+| Validation Accuracy | 88% |
+| Best class | Ship (F1: 0.94) |
+| Hardest class | Cat (F1: 0.75) |
 
 ---
 
@@ -100,11 +100,12 @@ Key parameters:
 
 | Parameter | Value |
 |-----------|-------|
-| Epochs | 30 |
+| Epochs | 100 |
 | Batch size | 128 |
 | Learning rate | 0.001 |
-| Optimizer | Adam |
-| Scheduler | CosineAnnealingLR |
+| Optimizer | AdamW |
+| Scheduler | LinearLR warmup + CosineAnnealingLR |
+| Weight decay | 0.0005 |
 | Dropout | 0.5 |
 
 ---
