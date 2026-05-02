@@ -11,9 +11,9 @@ Trains a custom CNN on the CIFAR-10 dataset from scratch, achieving ~83% accurac
 
 | Metric | Value |
 |--------|-------|
-| Validation Accuracy | 88% |
-| Best class | Ship (F1: 0.94) |
-| Hardest class | Cat (F1: 0.75) |
+| Validation Accuracy | 95% |
+| Best class | Automobile (F1: 0.98) |
+| Hardest class | Cat (F1: 0.89) |
 
 ---
 
@@ -84,11 +84,16 @@ Then open [http://localhost:6006](http://localhost:6006).
 
 ## Model Architecture
 
-A three-block CNN followed by a fully connected classifier.
+ResNet18 adapted for CIFAR-10 with two key modifications from the original ImageNet version:
+- Initial conv is 3×3 stride 1 (instead of 7×7 stride 2)
+- No initial maxpool layer
 
-Each convolutional block follows the pattern `Conv2d → BatchNorm2d → ReLU → MaxPool2d`,
-progressively increasing the number of channels (32 → 64 → 128) while halving the spatial resolution.
-The classifier head flattens the feature maps and projects them to 10 classes via two linear layers with dropout.
+The network consists of an initial convolution followed by 4 stages of 2 BasicBlocks each
+(64 → 128 → 256 → 512 channels), ending with global average pooling and a linear classifier.
+The skip connections allow gradients to flow through the entire 18-layer network without
+vanishing, which is the key innovation that enables training such deep architectures.
+
+The codebase supports both `SimpleCNN` (baseline) and `ResNet18` — switchable via `config.yaml`.
 
 ---
 
@@ -100,13 +105,13 @@ Key parameters:
 
 | Parameter | Value |
 |-----------|-------|
+| Architecture | ResNet18 (~11M params) |
 | Epochs | 100 |
 | Batch size | 128 |
 | Learning rate | 0.001 |
 | Optimizer | AdamW |
-| Scheduler | LinearLR warmup + CosineAnnealingLR |
+| Scheduler | LinearLR warmup (5 epochs) + CosineAnnealingLR |
 | Weight decay | 0.0005 |
-| Dropout | 0.5 |
 
 ---
 
