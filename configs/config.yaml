@@ -13,7 +13,7 @@ training:
   seed: 42
 
 model:
-  name: "SimpleCNN"
+  name: "ResNet18"
   dropout: 0.5
 
 logging:
