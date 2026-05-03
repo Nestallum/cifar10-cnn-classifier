@@ -1,7 +1,8 @@
 # CIFAR-10 CNN Classifier
 
 A clean, production-style image classification project built with PyTorch.
-Trains a custom CNN on the CIFAR-10 dataset from scratch, achieving ~83% accuracy on the validation set.
+Implements a ResNet18 from scratch, benchmarked against a SimpleCNN baseline,
+reaching 95% accuracy on the validation set.
 
 ---
 
