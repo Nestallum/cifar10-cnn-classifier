@@ -20,7 +20,6 @@ def set_seed(seed: int) -> None:
 def get_device() -> torch.device:
     """Return GPU if available, otherwise CPU."""
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    logging.info(f"Using device: {device}")
     return device
 
 
