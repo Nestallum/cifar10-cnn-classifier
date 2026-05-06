@@ -46,7 +46,7 @@ cifar10-cnn-classifier/
 
 **1. Clone the repository**
 ```bash
-git clone https://github.com/YOUR_USERNAME/cifar10-cnn-classifier.git
+git clone https://github.com/Nestallum/cifar10-cnn-classifier.git
 cd cifar10-cnn-classifier
 ```
 
