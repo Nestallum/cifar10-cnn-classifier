@@ -21,7 +21,7 @@ def main() -> None:
 
     # Setup
     logger = get_logger(__name__)
-    set_seed(config["training"]["seed"])
+    set_seed(config["seed"])
     device = get_device()
     results_dir = config["evaluation"]["results_dir"]
     os.makedirs(results_dir, exist_ok=True)

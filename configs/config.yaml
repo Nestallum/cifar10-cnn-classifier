@@ -10,11 +10,12 @@ training:
   learning_rate: 0.001
   weight_decay: 0.0005
   warmup_epochs: 5 
-  seed: 42
 
 model:
   name: "ResNet18"
   dropout: 0.5
+
+seed: 42
 
 logging:
   log_dir: "logs/"
